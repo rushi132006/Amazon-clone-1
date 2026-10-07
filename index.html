@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                <h2>amazon</h2>
+            </div>
+            <div class="nav-address">
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="address-text">
+                    <span class="deliver-to">Deliver to</span>
+                    <span class="country">India</span>
+                </div>
+            </div>
+            <div class="nav-search">
+                <select class="search-select"><option>All</option></select>
+                <input type="text" placeholder="Search Amazon" class="search-input">
+                <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="nav-tools">
+                <div class="nav-text">
+                    <span>Hello, sign in</span>
+                    <span class="fw-bold">Account & Lists</span>
+                </div>
+                <div class="nav-text">
+                    <span>Returns</span>
+                    <span class="fw-bold">& Orders</span>
+                </div>
+                <div class="nav-cart" style="cursor: pointer;" onclick="window.location.href='cart.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-count">0</span>
+                    <span class="fw-bold">Cart</span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-main">
+            <ul>
+                <li><i class="fa-solid fa-bars"></i> All</li>
+                <li>Today's Deals</li>
+                <li>Customer Service</li>
+                <li>Registry</li>
+                <li>Gift Cards</li>
+                <li>Sell</li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-section">
+            <div class="hero-msg">
+                <p>You are on amazon.com. You can also shop on Amazon India for millions of products with fast local delivery. <a href="#">Click here to go to amazon.in</a></p>
+            </div>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <h3>Fjallraven - Foldsack Backpack</h3>
+                <img src="https://images-na.ssl-images-amazon.com/images/I/71yfChmC5AL.jpg" alt="Backpack">
+                <p class="price">₹500</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>Mens Casual Premium T-Shirts</h3>
+                <img src="https://blackberrys.com/cdn/shop/files/black-striped-casual-shirts-kyton-aw26_1_533x.jpg?v=1786090798" alt="T-Shirt">
+                <p class="price">₹1200</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>Mens Cotton Jacket</h3>
+                <img src="https://m.media-amazon.com/images/I/81p+OGKjs4L.jpg" alt="Jacket">
+                <p class="price">₹1500</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>Noise Pulse Go Smart Watch</h3>
+                <img src="https://m.media-amazon.com/images/I/61akt30bJsL._SX679_.jpg" alt="Smart Watch">
+                <p class="price">₹2500</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>boAt Airdopes True Wireless</h3>
+                <img src="https://cdn1.smartprix.com/rx-iIVuGeQyM-w280-h280/boat-airdopes-prime.webp" alt="Earbuds">
+                <p class="price">₹1299</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>Puma Running Shoes</h3>
+                <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_300,h_300/global/379437/20/sv01/fnd/IND/fmt/png/Skyrocket-Lite-Running-Shoes" alt="Shoes">
+                <p class="price">₹2999</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>Sony Wireless Headphones</h3>
+                <img src="https://sony.scene7.com/is/image/sonyglobalsolutions/1000X_THE_COLLEXION_Sandstone_M?$mediumstaticimagehotspot$&fmt=png-alpha" alt="Headphones">
+                <p class="price">₹1500</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h3>Apple iPad 10th Gen</h3>
+                <img src="https://m.media-amazon.com/images/I/71XzDPt1jgL.jpg" alt="iPad">
+                <p class="price">₹45000</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

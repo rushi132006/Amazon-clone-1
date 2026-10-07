@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone - Checkout</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background-color: #e3e6e6;">
+    <header>
+        <div class="nav-container" style="justify-content: center; background-color: #0f1111;">
+            <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                <h2>amazon</h2>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding: 30px 20px; max-width: 1200px; margin: 0 auto;">
+        <h1 style="margin-bottom: 20px; font-weight: 400;">Checkout</h1>
+        
+        <div class="checkout-layout">
+            <div class="checkout-steps">
+                
+                <!-- Step 1: Address -->
+                <div class="checkout-step">
+                    <div class="step-header">
+                        <h3>1. Delivery address</h3>
+                    </div>
+                    <div class="step-content">
+                        
+                        <!-- Address List Container -->
+                        <div id="address-list">
+                            <!-- Default Saved Address -->
+                            <div class="address-box">
+                                <input type="radio" name="address" checked>
+                                <div class="address-details">
+                                    <p class="fw-bold">Rushikesh Ashok Ghope</p>
+                                    <p>Indira College of Engineering and Management</p>
+                                    <p>Pune, Maharashtra 410506</p>
+                                    <p>India</p>
+                                    <button class="use-address-btn" onclick="alert('Address Selected!')">Use this address</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add New Address Button -->
+                        <div class="add-new-address" onclick="toggleAddressForm()">
+                            <i class="fa-solid fa-plus"></i> Add a new address
+                        </div>
+
+                        <!-- Hidden New Address Form -->
+                        <div id="new-address-form" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                            <h4 style="margin-bottom: 15px; font-size: 1.1rem;">Add a new delivery address</h4>
+                            <div class="address-form-fields">
+                                <label>Full name (First and Last name)</label>
+                                <input type="text" id="new-name" class="form-input" placeholder="Enter your full name">
+                                
+                                <label>Mobile number</label>
+                                <input type="text" id="new-mobile" class="form-input" placeholder="10-digit mobile number">
+                                
+                                <label>Flat, House no., Building, Company</label>
+                                <input type="text" id="new-street" class="form-input" placeholder="e.g. 123 Main St">
+                                
+                                <div style="display: flex; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <label>Town/City</label>
+                                        <input type="text" id="new-city" class="form-input" placeholder="City">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label>Pincode</label>
+                                        <input type="text" id="new-pin" class="form-input" placeholder="6 digits">
+                                    </div>
+                                </div>
+                                
+                                <button class="use-address-btn" style="width: auto; padding: 10px 20px; margin-top: 15px;" onclick="saveNewAddress()">Add & Use this address</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Payment -->
+                <div class="checkout-step">
+                    <div class="step-header">
+                        <h3>2. Select a payment method</h3>
+                    </div>
+                    <div class="step-content">
+                        <div class="payment-options">
+                            <div class="payment-method">
+                                <label>
+                                    <div class="radio-label">
+                                        <input type="radio" name="payment" value="Credit/Debit Card">
+                                        <strong>Credit or debit card</strong>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="payment-method">
+                                <label>
+                                    <div class="radio-label">
+                                        <input type="radio" name="payment" value="Net Banking">
+                                        <strong>Net Banking</strong>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="payment-method">
+                                <label>
+                                    <div class="radio-label">
+                                        <input type="radio" name="payment" value="UPI">
+                                        <strong>Other UPI Apps</strong>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="payment-method">
+                                <label>
+                                    <div class="radio-label">
+                                        <input type="radio" name="payment" value="Cash on Delivery" checked>
+                                        <strong>Cash on Delivery/Pay on Delivery</strong>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="checkout-summary">
+                <button class="checkout-btn" onclick="processPayment()">Place Your Order</button>
+                <p style="font-size: 0.75rem; text-align: center; margin-top: 10px; color: #555;">By placing your order, you agree to Amazon's privacy notice.</p>
+                
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ddd;">
+                <h3 style="margin-bottom: 15px;">Order Summary</h3>
+                
+                <div class="summary-row">
+                    <span>Items:</span>
+                    <span>₹<span id="checkout-items-total">0</span></span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery:</span>
+                    <span>₹40</span>
+                </div>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ddd;">
+                <div class="summary-row total-row">
+                    <span>Order Total:</span>
+                    <span>₹<span id="checkout-final-total">0</span></span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

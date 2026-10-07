@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f3f3f3; }
+        .cart-page-container {
+            background-color: white;
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 1000px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .empty-cart-msg { text-align: center; padding: 50px; }
+        .empty-cart-msg a { color: #007185; text-decoration: none; font-weight: bold; }
+        .size-select {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f0f2f2;
+            cursor: pointer;
+        }
+        
+        /* Size Chart Modal Styles */
+        .chart-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .chart-table th, .chart-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .chart-table th { background-color: #f3f3f3; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header style="padding: 15px; background-color: #131921; color: white; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="cursor: pointer; margin:0;" onclick="window.location.href='index.html'">amazon</h2>
+        <a href="index.html" style="color: white; text-decoration: none;">Continue Shopping</a>
+    </header>
+
+    <div class="cart-page-container">
+        <h1>Shopping Cart</h1>
+        <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ddd;">
+        
+        <div id="cart-items-container">
+            <!-- Items will load here -->
+        </div>
+
+        <div class="cart-total" style="font-size: 1.2rem; text-align: right; margin-top: 20px; border-top: 1px solid #ddd; padding-top: 20px;">
+            <h3>Subtotal: <span id="cart-total-price" style="font-weight: bold; color: #B12704;">0 rs</span></h3>
+            <button class="checkout-btn" style="width: 200px; margin-top: 15px;" onclick="window.location.href='payment.html'">Proceed to Buy</button>
+        </div>
+    </div>
+
+    <!-- Size Chart Modal Popup -->
+    <div id="size-chart-modal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6);">
+        <div class="modal-content" style="background-color:#fff; margin:10% auto; padding:20px; width:80%; max-width:500px; border-radius:8px; position:relative;">
+            <span class="close-btn" onclick="closeSizeChart()" style="position:absolute; right:20px; top:10px; font-size:28px; cursor:pointer; color:#aaa;">&times;</span>
+            <h2>Size Guide</h2>
+            <table class="chart-table">
+                <tr>
+                    <th>Size</th>
+                    <th>Chest (inches)</th>
+                    <th>Length (inches)</th>
+                </tr>
+                <tr><td>Small (S)</td><td>38"</td><td>27"</td></tr>
+                <tr><td>Medium (M)</td><td>40"</td><td>28"</td></tr>
+                <tr><td>Large (L)</td><td>42"</td><td>29"</td></tr>
+                <tr><td>Extra Large (XL)</td><td>44"</td><td>30"</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function renderCart() {
+            const container = document.getElementById("cart-items-container");
+            const totalPriceEl = document.getElementById("cart-total-price");
+            
+            container.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart-msg">
+                        <h2>Your Amazon Cart is empty.</h2>
+                        <a href="index.html">Click here to continue shopping</a>
+                    </div>`;
+                totalPriceEl.innerText = "0 rs";
+                document.querySelector('.checkout-btn').style.display = 'none';
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                // It now reads the size selected from index.html!
+                let currentSize = item.size || 'M'; 
+                
+                container.innerHTML += `
+                    <div class="cart-item" style="padding: 20px 0; display: flex; border-bottom: 1px solid #eee;">
+                        <img src="${item.img}" alt="${item.title}" style="width: 120px; height: 120px; object-fit: contain;">
+                        <div style="flex: 1; margin-left: 20px;">
+                            <h3 style="margin-bottom: 10px;">${item.title}</h3>
+                            <p style="color: #007600; margin-bottom: 10px;">In Stock</p>
+                            
+                            <!-- SIZE SELECTION & CHART LINK -->
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div>
+                                    <label style="font-weight: bold; font-size: 0.9rem;">Size: </label>
+                                    <select class="size-select" onchange="updateSize(${index}, this.value)">
+                                        <option value="S" ${currentSize === 'S' ? 'selected' : ''}>Small (S)</option>
+                                        <option value="M" ${currentSize === 'M' ? 'selected' : ''}>Medium (M)</option>
+                                        <option value="L" ${currentSize === 'L' ? 'selected' : ''}>Large (L)</option>
+                                        <option value="XL" ${currentSize === 'XL' ? 'selected' : ''}>Extra Large (XL)</option>
+                                    </select>
+                                </div>
+                                <a href="#" onclick="openSizeChart(event)" style="color: #007185; text-decoration: none; font-size: 0.9rem; margin-top: 10px;">View Size Chart</a>
+                            </div>
+                            <br>
+                            
+                            <button onclick="removeItem(${index})" style="background:none; border:none; color:#007185; cursor:pointer;">Delete</button>
+                        </div>
+                        <div style="font-weight: bold; font-size: 1.3rem; color: #B12704;">
+                            ${item.price} rs
+                        </div>
+                    </div>
+                `;
+            });
+
+            totalPriceEl.innerText = `${total} rs`;
+        }
+
+        function updateSize(index, newSize) {
+            cart[index].size = newSize;
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        // Size Chart Modal Logic
+        const sizeModal = document.getElementById("size-chart-modal");
+        
+        function openSizeChart(e) {
+            e.preventDefault(); // Prevents the page from scrolling to the top
+            sizeModal.style.display = "block";
+        }
+        
+        function closeSizeChart() {
+            sizeModal.style.display = "none";
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == sizeModal) {
+                closeSizeChart();
+            }
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>
